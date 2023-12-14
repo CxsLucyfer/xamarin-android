@@ -1,0 +1,685 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test            - name: Download a Build Artifact
+  uses: actions/download-artifact@v2.1.1
+  with:
+    # Artifact name
+    name: # optional
+    # Destination path
+    path: # optional
+          
+      run: dotnet test --no-build --verbosity normal
+            - name: First interaction
+  uses: actions/first-interaction@v1.3.0
+  with:
+    # Token for the repository. Can be passed in using {{ secrets.GITHUB_TOKEN }}
+    repo-token: 
+    # Comment to post on an individual's first issue
+    issue-message: # optional
+    # Comment to post on an individual's first pull request
+    pr-message: # optional
+                      - name: Setup Go environment
+  uses: actions/setup-go@v5.0.0
+  with:
+    # The Go version to download (if necessary) and use. Supports semver spec and ranges. Be sure to enclose this option in single quotation marks.
+    go-version: # optional
+    # Path to the go.mod or go.work file.
+    go-version-file: # optional
+    # Set this option to true if you want the action to always check for the latest available version that satisfies the version spec
+    check-latest: # optional
+    # Used to pull Go distributions from go-versions. Since there's a default, this is typically not supplied by the user. When running this action on github.com, the default value is sufficient. When running on GHES, you can pass a personal access token for github.com if you are experiencing rate limiting.
+    token: # optional, default is ${{ github.server_url == 'https://github.com' && github.token || '' }}
+    # Used to specify whether caching is needed. Set to true, if you'd like to enable caching.
+    cache: # optional, default is true
+    # Used to specify the path to a dependency file - go.sum
+    cache-dependency-path: # optional
+    # Target architecture for Go to use. Examples: x86, x64. Will use system architecture by default.
+    architecture: # optional
+                      - name: Cache
+  uses: actions/cache@v3.3.2
+  with:
+    # A list of files, directories, and wildcard patterns to cache and restore
+    path: 
+    # An explicit key for restoring and saving the cache
+    key: 
+    # An ordered list of keys to use for restoring stale cache if no cache hit occurred for key. Note `cache-hit` returns false in this case.
+    restore-keys: # optional
+    # The chunk size used to split up large files during upload, in bytes
+    upload-chunk-size: # optional
+    # An optional boolean when enabled, allows windows runners to save or restore caches that can be restored or saved respectively on other platforms
+    enableCrossOsArchive: # optional, default is false
+    # Fail the workflow if cache entry is not found
+    fail-on-cache-miss: # optional, default is false
+    # Check if a cache entry exists for the given input(s) (key, restore-keys) without downloading the cache
+    lookup-only: # optional, default is false
+                      - name: Close Stale Issues
+  uses: actions/stale@v9.0.0
+  with:
+    # Token for the repository. Can be passed in using `{{ secrets.GITHUB_TOKEN }}`.
+    repo-token: # optional, default is ${{ github.token }}
+    # The message to post on the issue when tagging it. If none provided, will not mark issues stale.
+    stale-issue-message: # optional
+    # The message to post on the pull request when tagging it. If none provided, will not mark pull requests stale.
+    stale-pr-message: # optional
+    # The message to post on the issue when closing it. If none provided, will not comment when closing an issue.
+    close-issue-message: # optional
+    # The message to post on the pull request when closing it. If none provided, will not comment when closing a pull requests.
+    close-pr-message: # optional
+    # The number of days old an issue or a pull request can be before marking it stale. Set to -1 to never mark issues or pull requests as stale automatically.
+    days-before-stale: # optional, default is 60
+    # The number of days old an issue can be before marking it stale. Set to -1 to never mark issues as stale automatically. Override "days-before-stale" option regarding only the issues.
+    days-before-issue-stale: # optional
+    # The number of days old a pull request can be before marking it stale. Set to -1 to never mark pull requests as stale automatically. Override "days-before-stale" option regarding only the pull requests.
+    days-before-pr-stale: # optional
+    # The number of days to wait to close an issue or a pull request after it being marked stale. Set to -1 to never close stale issues or pull requests.
+    days-before-close: # optional, default is 7
+    # The number of days to wait to close an issue after it being marked stale. Set to -1 to never close stale issues. Override "days-before-close" option regarding only the issues.
+    days-before-issue-close: # optional
+    # The number of days to wait to close a pull request after it being marked stale. Set to -1 to never close stale pull requests. Override "days-before-close" option regarding only the pull requests.
+    days-before-pr-close: # optional
+    # The label to apply when an issue is stale.
+    stale-issue-label: # optional, default is Stale
+    # The label to apply when an issue is closed.
+    close-issue-label: # optional
+    # The labels that mean an issue is exempt from being marked stale. Separate multiple labels with commas (eg. "label1,label2").
+    exempt-issue-labels: # optional, default is 
+    # The reason to use when closing an issue.
+    close-issue-reason: # optional, default is not_planned
+    # The label to apply when a pull request is stale.
+    stale-pr-label: # optional, default is Stale
+    # The label to apply when a pull request is closed.
+    close-pr-label: # optional
+    # The labels that mean a pull request is exempt from being marked as stale. Separate multiple labels with commas (eg. "label1,label2").
+    exempt-pr-labels: # optional, default is 
+    # The milestones that mean an issue or a pull request is exempt from being marked as stale. Separate multiple milestones with commas (eg. "milestone1,milestone2").
+    exempt-milestones: # optional, default is 
+    # The milestones that mean an issue is exempt from being marked as stale. Separate multiple milestones with commas (eg. "milestone1,milestone2"). Override "exempt-milestones" option regarding only the issues.
+    exempt-issue-milestones: # optional, default is 
+    # The milestones that mean a pull request is exempt from being marked as stale. Separate multiple milestones with commas (eg. "milestone1,milestone2"). Override "exempt-milestones" option regarding only the pull requests.
+    exempt-pr-milestones: # optional, default is 
+    # Exempt all issues and pull requests with milestones from being marked as stale. Default to false.
+    exempt-all-milestones: # optional, default is false
+    # Exempt all issues with milestones from being marked as stale. Override "exempt-all-milestones" option regarding only the issues.
+    exempt-all-issue-milestones: # optional, default is 
+    # Exempt all pull requests with milestones from being marked as stale. Override "exempt-all-milestones" option regarding only the pull requests.
+    exempt-all-pr-milestones: # optional, default is 
+    # Only issues or pull requests with all of these labels are checked if stale. Defaults to `` (disabled) and can be a comma-separated list of labels.
+    only-labels: # optional, default is 
+    # Only issues or pull requests with at least one of these labels are checked if stale. Defaults to `` (disabled) and can be a comma-separated list of labels.
+    any-of-labels: # optional, default is 
+    # Only issues with at least one of these labels are checked if stale. Defaults to `` (disabled) and can be a comma-separated list of labels. Override "any-of-labels" option regarding only the issues.
+    any-of-issue-labels: # optional, default is 
+    # Only pull requests with at least one of these labels are checked if stale. Defaults to `` (disabled) and can be a comma-separated list of labels. Override "any-of-labels" option regarding only the pull requests.
+    any-of-pr-labels: # optional, default is 
+    # Only issues with all of these labels are checked if stale. Defaults to `[]` (disabled) and can be a comma-separated list of labels. Override "only-labels" option regarding only the issues.
+    only-issue-labels: # optional, default is 
+    # Only pull requests with all of these labels are checked if stale. Defaults to `[]` (disabled) and can be a comma-separated list of labels. Override "only-labels" option regarding only the pull requests.
+    only-pr-labels: # optional, default is 
+    # The maximum number of operations per run, used to control rate limiting (GitHub API CRUD related).
+    operations-per-run: # optional, default is 30
+    # Remove stale labels from issues and pull requests when they are updated or commented on.
+    remove-stale-when-updated: # optional, default is true
+    # Remove stale labels from issues when they are updated or commented on. Override "remove-stale-when-updated" option regarding only the issues.
+    remove-issue-stale-when-updated: # optional, default is 
+    # Remove stale labels from pull requests when they are updated or commented on. Override "remove-stale-when-updated" option regarding only the pull requests.
+    remove-pr-stale-when-updated: # optional, default is 
+    # Run the processor in debug mode without actually performing any operations on live issues.
+    debug-only: # optional, default is false
+    # The order to get issues or pull requests. Defaults to false, which is descending.
+    ascending: # optional, default is false
+    # Delete the git branch after closing a stale pull request.
+    delete-branch: # optional, default is false
+    # The date used to skip the stale action on issue/pull request created before it (ISO 8601 or RFC 2822).
+    start-date: # optional, default is 
+    # The assignees which exempt an issue or a pull request from being marked as stale. Separate multiple assignees with commas (eg. "user1,user2").
+    exempt-assignees: # optional, default is 
+    # The assignees which exempt an issue from being marked as stale. Separate multiple assignees with commas (eg. "user1,user2"). Override "exempt-assignees" option regarding only the issues.
+    exempt-issue-assignees: # optional, default is 
+    # The assignees which exempt a pull request from being marked as stale. Separate multiple assignees with commas (eg. "user1,user2"). Override "exempt-assignees" option regarding only the pull requests.
+    exempt-pr-assignees: # optional, default is 
+    # Exempt all issues and pull requests with assignees from being marked as stale. Default to false.
+    exempt-all-assignees: # optional, default is false
+    # Exempt all issues with assignees from being marked as stale. Override "exempt-all-assignees" option regarding only the issues.
+    exempt-all-issue-assignees: # optional, default is 
+    # Exempt all pull requests with assignees from being marked as stale. Override "exempt-all-assignees" option regarding only the pull requests.
+    exempt-all-pr-assignees: # optional, default is 
+    # Exempt draft pull requests from being marked as stale. Default to false.
+    exempt-draft-pr: # optional, default is false
+    # Display some statistics at the end regarding the stale workflow (only when the logs are enabled).
+    enable-statistics: # optional, default is true
+    # A comma delimited list of labels to add when an issue or pull request becomes unstale.
+    labels-to-add-when-unstale: # optional, default is 
+    # A comma delimited list of labels to remove when an issue or pull request becomes stale.
+    labels-to-remove-when-stale: # optional, default is 
+    # A comma delimited list of labels to remove when an issue or pull request becomes unstale.
+    labels-to-remove-when-unstale: # optional, default is 
+    # Any update (update/comment) can reset the stale idle time on the issues and pull requests.
+    ignore-updates: # optional, default is false
+    # Any update (update/comment) can reset the stale idle time on the issues. Override "ignore-updates" option regarding only the issues.
+    ignore-issue-updates: # optional, default is 
+    # Any update (update/comment) can reset the stale idle time on the pull requests. Override "ignore-updates" option regarding only the pull requests.
+    ignore-pr-updates: # optional, default is 
+    # Only the issues or the pull requests with an assignee will be marked as stale automatically.
+    include-only-assigned: # optional, default is false
+            - name: StackQL Studios - StackQL Exec
+  # You may pin to the exact commit or the version.
+  # uses: stackql/stackql-exec@f4254275b3675285d077875f9f50bd816d94cc00
+  uses: stackql/stackql-exec@v1.3.1
+  with:
+    # stackql query to be executed
+    query: # optional
+    # stackql query file to be executed
+    query_file_path: # optional
+    # jsonnet or json data file to be passed to query preprocessor
+    data_file_path: # optional
+    # comma delimited list of vars to be passed to query preprocessor (supported with jsonnet config blocks or jsonnet data files only)
+    vars: # optional
+    # output format
+    query_output: # optional, default is json
+    # file path to json object of stackql auth, not required if using standard provider authentication environment variables
+    auth_obj_path: # optional
+    # json string of stackql auth, not required if using standard provider authentication environment variables
+    auth_str: # optional
+          
+                      - name: EKS on Fargate
+  # You may pin to the exact commit or the version.
+  # uses: aws-actions/amazon-eks-fargate@fa91b1ce6e342eb17a1d57df976506d02f074640
+  uses: aws-actions/amazon-eks-fargate@v0.1.1
+
+                      - name: Docker Scout
+  # You may pin to the exact commit or the version.
+  # uses: docker/scout-action@b7413c99043c2a9131c0fa39cedaece80f285788
+  uses: docker/scout-action@v1.2.2
+  with:
+    # Command(s) to run.
+Use a comma separated list to run several commands on the same set of parameters, for instance quickview,compare
+
+    command: 
+    # Debug
+    debug: # optional
+    # Print more verbose debug messages
+    verbose-debug: # optional
+    # Publish the output as GitHub Action summary
+    summary: # optional, default is true
+    # Namespace of the Docker organization
+    organization: # optional
+    # Image to analyze
+    image: # optional
+    # Platform of the image to analyze
+    platform: # optional
+    # Ref if needed
+    ref: # optional
+    # Image to compare to
+    to: # optional
+    # Ref of image to compare
+    to-ref: # optional
+    # Compare to image in stream
+    to-stream: # optional
+    # Compare to image in environment
+    to-env: # optional
+    # Compare to latest pushed image
+    to-latest: # optional
+    # Name of the stream to record the image
+    stream: # optional
+    # Name of the environment to record the image
+    environment: # optional
+    # Hide policies from the output altogether
+    hide-policies: # optional
+    # Ignore vulnerabilities from base image
+    ignore-base: # optional
+    # Filter out unchanged packages
+    ignore-unchanged: # optional
+    # Filter out CVEs that are marked not affected by a VEX statement
+    ignore-vex: # optional
+    # Filter to fixable CVEs
+    only-fixed: # optional
+    # Filter to unfixed CVEs
+    only-unfixed: # optional
+    # Comma separated list of severities (critical, high, medium, low, unspecified) to filter CVEs by
+    only-severities: # optional
+    # Comma separated list of package types (like apk, deb, rpm, npm, pypi, golang, etc)
+    only-package-types: # optional
+    # Fail the action step if vulnerability changes are detected
+    exit-code: # optional
+    # (compare only) Comma separated list of conditions to fail the action step if worsened, options are: vulnerability, policy
+    exit-on: # optional
+    # Write output to a SARIF file for further processing or upload into GitHub code scanning
+    sarif-file: # optional
+    # Docker Hub User
+    dockerhub-user: # optional
+    # Docker Hub PAT
+    dockerhub-password: # optional
+    # Registry user to pull images
+    registry-user: # optional
+    # Registry password to pull images
+    registry-password: # optional
+    # GitHub Token to write comments
+    github-token: # optional, default is ${{ github.token }}
+    # Write the output as a Pull Request comment
+    write-comment: # optional, default is true
+    # If set, keep but hide previous comment. If not set, keep and update one single comment per job
+    keep-previous-comments: # optional
+                      - name: Docker Login
+  # You may pin to the exact commit or the version.
+  # uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d
+  uses: docker/login-action@v3.0.0
+  with:
+    # Server address of Docker registry. If not set then will default to Docker Hub
+    registry: # optional
+    # Username used to log against the Docker registry
+    username: # optional
+    # Password or personal access token used to log against the Docker registry
+    password: # optional
+    # Specifies whether the given registry is ECR (auto, true or false)
+    ecr: # optional, default is auto
+    # Log out from the Docker registry at the end of a job
+    logout: # optional, default is true
+                      - name: Docker image exists
+  # You may pin to the exact commit or the version.
+  # uses: cloudposse/github-action-docker-image-exists@3a691104a3d105aecb95e17e8ac5f21d271e53be
+  uses: cloudposse/github-action-docker-image-exists@0.1.2
+  with:
+    # Organization
+    organization: 
+    # Repository
+    repository: 
+    # Docker registry
+    registry: 
+    # Image name (excluding registry). Defaults to {{$organization/$repository}}.
+    image_name: # optional, default is 
+    # Tag
+    tag: 
+    # Docker login
+
+                - name: Docker compose tests run
+  # You may pin to the exact commit or the version.
+  # uses: cloudposse/github-action-docker-compose-test-run@46a8be68cb7d5372fd972661aeab8e9f9c717579
+  uses: cloudposse/github-action-docker-compose-test-run@0.1.3
+  with:
+    # Working directory
+    workdir: # optional, default is ./
+    # Docker compose file
+    file: 
+    # Service run tests inside
+    service: 
+    # Entrypoint
+    entrypoint: # optional, default is /bin/sh
+    # Command to run tests
+    command: 
+    # Docker compose version
+    docker-compose-version: # optional, default is 1.29.2
+    # Docker registry
+    registry: 
+    # Docker login
+    login: # optional, default is 
+    # Docker password
+    password: # optional, default is 
+          
+    login: # optional, default is 
+    # Docker password
+    password: # optional, default is 
+                - name: Dockerfile example
+  # You may pin to the exact commit or the version.
+  # uses: devops-actions/docker-action-demo2@8fe75b12f30470cb6e96d9b88e34858258bae4a0
+  uses: devops-actions/docker-action-demo2@v0.0.1-alpha
+                      - name: Docker Build Tag Publish
+  # You may pin to the exact commit or the version.
+  # uses: bitovi/github-actions-docker-publish@def3cb9a3ef842b230bf575dc4f5e280ae6a6896
+  uses: bitovi/github-actions-docker-publish@v1.0.7
+  with:
+    # Checkout the repository
+    checkout: # optional, default is true
+    # Tag to override default Logic
+    image_tag: # optional, default is 
+    # Use the SHA for the tag.  Overrides the default logic.
+    use_sha: # optional, default is false
+    # Docker org name.
+    org_name: # optional, default is 
+    # Name of the docker repository
+    repo_name: # optional, default is 
+    # Tag default branch with latest tag instead of branch name.
+    use_latest: # optional, default is true
+    # Docker user
+    docker_username: 
+    # Docker password
+    docker_password: 
+    # Add a string of values to the end of the build command
+    build_args: # optional
+    # Specify the working directory that the docker build will be run in
+    working-directory: # optional
+                      - name: Docker build and push
+  # You may pin to the exact commit or the version.
+  # uses: cloudposse/github-action-docker-build-push@f1139911cacb0c4e6a2a79ae5c215684e87fd8fb
+  uses: cloudposse/github-action-docker-build-push@1.14.0
+  with:
+    # Working directory
+    workdir: # optional, default is ./
+    # Dockerfile name
+    file: # optional, default is Dockerfile
+    # List of build-time variables
+    build-args: # optional
+    # Organization
+    organization: 
+    # Repository
+    repository: 
+    # Docker registry
+    registry: 
+    # Sets the target stage to build
+    target: # optional, default is 
+    # List of target platforms for build (e.g. linux/amd64,linux/arm64,linux/riscv64,linux/ppc64le,linux/s390x,etc)
+    platforms: # optional, default is linux/amd64
+    # Generate provenance attestation for the build
+    provenance: # optional
+    # Image name (excluding registry). Defaults to {{$organization/$repository}}.
+    image_name: # optional, default is 
+    # Docker login
+    login: # optional, default is 
+                - name: Docker Buildx Bake
+  # You may pin to the exact commit or the version.
+  # uses: docker/bake-action@849707117b03d39aba7924c50a10376a69e88d7d
+  uses: docker/bake-action@v4.1.0
+  with:
+    # Builder instance
+    builder: # optional
+    # List of bake definition files
+    files: # optional
+    # Working directory of bake execution
+    workdir: # optional, default is .
+    # List of bake targets
+    targets: # optional
+    # Do not use cache when building the image
+    no-cache: # optional, default is false
+    # Always attempt to pull a newer version of the image
+    pull: # optional, default is false
+    # Load is a shorthand for --set=*.output=type=docker
+    load: # optional, default is false
+    # Provenance is a shorthand for --set=*.attest=type=provenance
+    provenance: # optional
+    # Push is a shorthand for --set=*.output=type=registry
+    push: # optional, default is false
+    # SBOM is a shorthand for --set=*.attest=type=sbom
+    sbom: # optional
+    # List of targets values to override (eg. targetpattern.key=value)
+    set: # optional
+    # Remote bake definition to build from
+    source: # optional
+          
+    # Docker password
+    password: # optional, default is 
+    # List of external cache sources for buildx (e.g., user/app:cache, type=local,src=path/to/dir)
+    cache-from: # optional, default is type=gha
+    # List of cache export destinations for buildx (e.g., user/app:cache, type=local,dest=path/to/dir)
+    cache-to: # optional, default is type=gha,mode=max
+    # Send the --no-cache flag to the docker build process
+    no-cache: # optional, default is false
+    # List of SSH agent socket or keys to expose to the build
+    ssh: # optional
+    # List of tags (supports https://github.com/docker/metadata-action#tags-input)
+    tags: # optional
+    # List of secrets to expose to the build (e.g., key=string, GIT_AUTH_TOKEN=mytoken)
+    secrets: # optional
+    # List of secret files to expose to the build (e.g., key=filename, MY_SECRET=./secret.txt)
+    secret-files: # optional
+    # Set to `true` to tag images with the PR HEAD SHA instead of the merge commit SHA within pull requests.
+    docker-metadata-pr-head-sha: # optional, default is false
+
+            - name: Docker Setup Buildx
+  # You may pin to the exact commit or the version.
+  # uses: docker/setup-buildx-action@f95db51fddba0c2d1ec667646a06c2ce06100226
+  uses: docker/setup-buildx-action@v3.0.0
+  with:
+    # Buildx version. (eg. v0.3.0)
+    version: # optional
+    # Sets the builder driver to be used
+    driver: # optional, default is docker-container
+    # List of additional driver-specific options. (eg. image=moby/buildkit:master)
+    driver-opts: # optional
+    # Flags for buildkitd daemon
+    buildkitd-flags: # optional, default is --allow-insecure-entitlement security.insecure --allow-insecure-entitlement network.host
+    # Sets up docker build command as an alias to docker buildx build
+    install: # optional, default is false
+    # Switch to this builder instance
+    use: # optional, default is true
+    # Optional address for docker socket or context from `docker context ls`
+    endpoint: # optional
+    # Fixed platforms for current node. If not empty, values take priority over the detected ones
+    platforms: # optional
+    # BuildKit config file
+    config: # optional
+    # Inline BuildKit config
+    config-inline: # optional
+    # Append additional nodes to the builder
+    append: # optional
+    # Cleanup temp files and remove builder at the end of a job
+    cleanup: # optional, default is true
+          
+            - name: Docker build and push
+  # You may pin to the exact commit or the version.
+  # uses: cloudposse/github-action-docker-build-push@f1139911cacb0c4e6a2a79ae5c215684e87fd8fb
+  uses: cloudposse/github-action-docker-build-push@1.14.0
+  with:
+    # Working directory
+    workdir: # optional, default is ./
+    # Dockerfile name
+    file: # optional, default is Dockerfile
+    # List of build-time variables
+    build-args: # optional
+
+                - name: GitHub Action for Syncing Docker Repositories
+  # You may pin to the exact commit or the version.
+  # uses: cloudposse/github-action-sync-docker-repos@a1a04d57b75e6d64c978f02f777307ad03f6f605
+  uses: cloudposse/github-action-sync-docker-repos@0.0.1
+  with:
+    # The source repository to sync from.
+    src: 
+    # The source repository credentials.
+    src-credentials: # optional
+    # The destination repository to sync to.
+    dest: 
+    # The destination repository credentials.
+    dest-credentials: # optional
+    # Override the architecture of the src image.
+    override-arch: # optional
+    # Override the operating system of the src image.
+    override-os: # optional
+    # If one of the images in src refers to a list of images, instead of copying just the image which matches the
+current OS and architecture, attempt to copy all of the images in the list, and the list itself.
+
+    override-multi-arch: # optional, default is true
+          
+    # Organization
+    organization: 
+    # Repository
+    repository: 
+    # Docker registry
+    registry: 
+    # Sets the target stage to build
+    target: # optional, default is 
+    # List of target platforms for build (e.g. linux/amd64,linux/arm64,linux/riscv64,linux/ppc64le,linux/s390x,etc)
+    platforms: # optional, default is linux/amd64
+    # Generate provenance attestation for the build
+    provenance: # optional
+    # Image name (excluding registry). Defaults to {{$organization/$repository}}.
+    image_name: # optional, default is 
+    # Docker login
+    login: # optional, default is 
+    # Docker password
+    password: # optional, default is 
+    # List of external cache sources for buildx (e.g., user/app:cache, type=local,src=path/to/dir)
+    cache-from: # optional, default is type=gha
+    # List of cache export destinations for buildx (e.g., user/app:cache, type=local,dest=path/to/dir)
+    cache-to: # optional, default is type=gha,mode=max
+    # Send the --no-cache flag to the docker build process
+    no-cache: # optional, default is false
+    # List of SSH agent socket or keys to expose to the build
+    ssh: # optional
+    # List of tags (supports https://github.com/docker/metadata-action#tags-input)
+    tags: # optional
+    # List of secrets to expose to the build (e.g., key=string, GIT_AUTH_TOKEN=mytoken)
+    secrets: # optional
+    # List of secret files to expose to the build (e.g., key=filename, MY_SECRET=./secret.txt)
+    secret-files: # optional
+    # Set to `true` to tag images with the PR HEAD SHA instead of the merge commit SHA within pull requests.
+    docker-metadata-pr-head-sha: # optional, default is false
+          
+            - name: Build Docker Image and Push to GHCR, Docker Hub, or AWS ECR
+  # You may pin to the exact commit or the version.
+  # uses: GlueOps/github-actions-build-push-containers@0334c7434924da4a864e9b3bdab2c2c0da5484b8
+  uses: GlueOps/github-actions-build-push-containers@v0.3.5
+  with:
+    # The Dockerfile filename
+    dockerfile: # optional, default is Dockerfile
+    # The container registry to push the image to
+    registry: # default is ghcr.io
+    # The username for authentication to the container registry (defaults to the github.actor)
+    registry-username: # default is ${{ github.actor }}
+    # Docker image is named after repository
+    image_name: # default is ${{ github.repository }}
+    # A path to the context in which the build will happen, see https://docs.docker.com/engine/reference/commandline/build/
+    context: # optional, default is .
+    # Directory to clone the repository into.
+    target_directory: # optional, default is .
+    # Comma-separate list of tags for built image.  Defaults to GlueOps tags
+    tags: # optional, default is 
+    # Personal Access Token (PAT) used to authenticate with the GitHub Container Registry.
+    github_token: # optional, default is ${{ github.token }}
+    # AWS Access Key ID - to be used in conjunction with `aws_secret_access_key`
+    aws_access_key_id: # optional
+    # AWS Secret Access Key - to be used in conjunction with `aws_access_key_id`
+    aws_secret_access_key: # optional
+    # AWS IAM Role to assume, when using the GitHub OIDC provider in conjunction with a configured AWS IAM Identity Provider endpoint and instead of access key / secret key pair
+    aws_role_to_assume: # optional
+    # AWS Default Region
+    aws_default_region: # optional, default is us-west-2
+    # Version of AWS CLI to use
+    aws_cli_version: # optional, default is 2.13.20
+    # Docker Hub Username
+    dockerhub_username: # optional
+    # Docker Hub Personal Access Token
+    dockerhub_password: # optional
+          
+                      - name: Docker Metadata action
+  # You may pin to the exact commit or the version.
+  # uses: docker/metadata-action@31cebacef4805868f9ce9a0cb03ee36c32df2ac4
+  uses: docker/metadata-action@v5.3.0
+  with:
+    # Where to get context data. Allowed options are "workflow"  (default), "git".
+    context: # default is workflow
+    # List of Docker images to use as base name for tags
+    images: # optional
+    # List of tags as key-value pair attributes
+    tags: # optional
+    # Flavors to apply
+    flavor: # optional
+    # List of custom labels
+    labels: # optional
+    # List of custom annotations
+    annotations: # optional
+    # Separator to use for tags output (default \n)
+    sep-tags: # optional
+    # Separator to use for labels output (default \n)
+    sep-labels: # optional
+    # Separator to use for annotations output (default \n)
+    sep-annotations: # optional
+
+
+                - name: Build and push Docker images
+  # You may pin to the exact commit or the version.
+  # uses: docker/build-push-action@4a13e500e55cf31b7a5d59a38ab2040ab0f42f56
+  uses: docker/build-push-action@v5.1.0
+  with:
+    # List of a customs host-to-IP mapping (e.g., docker:10.180.0.1)
+    add-hosts: # optional
+    # List of extra privileged entitlement (e.g., network.host,security.insecure)
+    allow: # optional
+    # List of annotation to set to the image
+    annotations: # optional
+    # List of attestation parameters (e.g., type=sbom,generator=image)
+    attests: # optional
+    # List of build-time variables
+    build-args: # optional
+    # List of additional build contexts (e.g., name=path)
+    build-contexts: # optional
+    # Builder instance
+    builder: # optional
+    # List of external cache sources for buildx (e.g., user/app:cache, type=local,src=path/to/dir)
+    cache-from: # optional
+    # List of cache export destinations for buildx (e.g., user/app:cache, type=local,dest=path/to/dir)
+    cache-to: # optional
+    # Optional parent cgroup for the container used in the build
+    cgroup-parent: # optional
+    # Build's context is the set of files located in the specified PATH or URL
+    context: # optional
+    # Path to the Dockerfile
+    file: # optional
+    # List of metadata for an image
+    labels: # optional
+    # Load is a shorthand for --output=type=docker
+    load: # optional, default is false
+    # Set the networking mode for the RUN instructions during build
+    network: # optional
+    # Do not use cache when building the image
+    no-cache: # optional, default is false
+    # Do not cache specified stages
+    no-cache-filters: # optional
+    # List of output destinations (format: type=local,dest=path)
+    outputs: # optional
+    # List of target platforms for build
+    platforms: # optional
+    # Generate provenance attestation for the build (shorthand for --attest=type=provenance)
+    provenance: # optional
+    # Always attempt to pull all referenced images
+    pull: # optional, default is false
+    # Push is a shorthand for --output=type=registry
+    push: # optional, default is false
+    # Generate SBOM attestation for the build (shorthand for --attest=type=sbom)
+    sbom: # optional
+    # List of secrets to expose to the build (e.g., key=string, GIT_AUTH_TOKEN=mytoken)
+    secrets: # optional
+    # List of secret env vars to expose to the build (e.g., key=envname, MY_SECRET=MY_ENV_VAR)
+    secret-envs: # optional
+    # List of secret files to expose to the build (e.g., key=filename, MY_SECRET=./secret.txt)
+    secret-files: # optional
+    # Size of /dev/shm (e.g., 2g)
+    shm-size: # optional
+    # List of SSH agent socket or keys to expose to the build
+    ssh: # optional
+    # List of tags
+    tags: # optional
+    # Sets the target stage to build
+    target: # optional
+    # Ulimit options (e.g., nofile=1024:1024)
+    ulimit: # optional
+    # GitHub Token used to authenticate against a repository for Git context
+    github-token: # optional, default is ${{ github.token }}
+          
+    # Bake target name (default docker-metadata-action)
+    bake-target: # optional
+    # GitHub Token as provided by secrets
+    github-token: # default is ${{ github.token }}
+
+          
